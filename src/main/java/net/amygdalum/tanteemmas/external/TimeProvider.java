@@ -23,12 +23,7 @@ public class TimeProvider {
 	}
 
 	public long hours() {
-		increase();
 		return hours;
-	}
-
-	private void increase() {
-		hours += speed;
 	}
 
 	public long days() {
