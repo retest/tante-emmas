@@ -23,13 +23,13 @@ import net.amygdalum.tanteemmas.sources.Wind;
 
 public class SimulatedWeatherSource implements WeatherSource {
 
-	private TimeProvider time;
+	private SimulatedTimeProvider time;
 	private DateSource date;
 	private Waves precipitation;
 	private Waves temperature;
 	private Waves wind;
 
-	public SimulatedWeatherSource(TimeProvider time, DateSource date) {
+	public SimulatedWeatherSource(SimulatedTimeProvider time, DateSource date) {
 		this.time = time;
 		this.date = date;
 		this.precipitation = new Waves(1.0, 5, 15.0);
