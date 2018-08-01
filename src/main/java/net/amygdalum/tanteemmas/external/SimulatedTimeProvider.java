@@ -2,8 +2,8 @@ package net.amygdalum.tanteemmas.external;
 
 public class SimulatedTimeProvider {
 
-	private long hours;
-	private long speed;
+	private final long hours;
+	private final long speed;
 
 	public SimulatedTimeProvider() {
 		this.hours = 0;
@@ -11,11 +11,7 @@ public class SimulatedTimeProvider {
 	}
 
 	public void setSpeed(long speed) {
-		if (speed <= 0) {
-			speed = 1;
-			return;
-		}
-		this.speed = speed;
+		// do nothing
 	}
 
 	public long getSpeed() {
