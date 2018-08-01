@@ -18,7 +18,7 @@ import io.vertx.ext.web.templ.TemplateEngine;
 import net.amygdalum.tanteemmas.external.SimulatedDateSource;
 import net.amygdalum.tanteemmas.external.SimulatedDaytimeSource;
 import net.amygdalum.tanteemmas.external.SimulatedWeatherSource;
-import net.amygdalum.tanteemmas.external.TimeProvider;
+import net.amygdalum.tanteemmas.external.SimulatedTimeProvider;
 import net.amygdalum.tanteemmas.sources.DateSource;
 import net.amygdalum.tanteemmas.sources.DaytimeSource;
 import net.amygdalum.tanteemmas.sources.WeatherSource;
@@ -32,7 +32,7 @@ public class Server extends AbstractVerticle {
 	private final TemplateEngine engine;
 	private final List<Map<String, Object>> orders = new ArrayList<>();
 
-	private TimeProvider time;
+	private SimulatedTimeProvider time;
 	private DateSource date;
 	private DaytimeSource daytime;
 	private WeatherSource weather;
@@ -41,7 +41,7 @@ public class Server extends AbstractVerticle {
 		engine = HandlebarsTemplateEngine.create().setExtension("html");
 		products = new ProductRepo().init();
 		customers = new CustomerRepo().init();
-		time = new TimeProvider();
+		time = new SimulatedTimeProvider();
 		date = new SimulatedDateSource(time);
 		daytime = new SimulatedDaytimeSource(time);
 		weather = new SimulatedWeatherSource(time, date);

@@ -7,9 +7,9 @@ import net.amygdalum.tanteemmas.sources.Weekday;
 
 public class SimulatedDateSource implements DateSource {
 
-	private TimeProvider time;
+	private SimulatedTimeProvider time;
 
-	public SimulatedDateSource(TimeProvider time) {
+	public SimulatedDateSource(SimulatedTimeProvider time) {
 		this.time = time;
 	}
 

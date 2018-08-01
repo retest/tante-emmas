@@ -11,9 +11,9 @@ import net.amygdalum.tanteemmas.sources.DaytimeSource;
 
 public class SimulatedDaytimeSource implements DaytimeSource {
 
-	private TimeProvider time;
+	private SimulatedTimeProvider time;
 
-	public SimulatedDaytimeSource(TimeProvider time) {
+	public SimulatedDaytimeSource(SimulatedTimeProvider time) {
 		this.time = time;
 	}
 

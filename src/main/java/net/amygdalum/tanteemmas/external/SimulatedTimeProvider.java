@@ -1,11 +1,11 @@
 package net.amygdalum.tanteemmas.external;
 
-public class TimeProvider {
+public class SimulatedTimeProvider {
 
 	private long hours;
 	private long speed;
 
-	public TimeProvider() {
+	public SimulatedTimeProvider() {
 		this.hours = 0;
 		this.speed = 1;
 	}
