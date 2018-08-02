@@ -8,6 +8,7 @@ import static net.amygdalum.tanteemmas.sources.Daytime.NOON;
 
 import net.amygdalum.tanteemmas.sources.Daytime;
 import net.amygdalum.tanteemmas.sources.DaytimeSource;
+import net.amygdalum.tanteemmas.sources.TimeProvider;
 
 public class SimulatedDaytimeSource implements DaytimeSource {
 

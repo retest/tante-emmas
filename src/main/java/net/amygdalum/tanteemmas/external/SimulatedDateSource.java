@@ -3,6 +3,7 @@ package net.amygdalum.tanteemmas.external;
 import net.amygdalum.tanteemmas.sources.Date;
 import net.amygdalum.tanteemmas.sources.DateSource;
 import net.amygdalum.tanteemmas.sources.Season;
+import net.amygdalum.tanteemmas.sources.TimeProvider;
 import net.amygdalum.tanteemmas.sources.Weekday;
 
 public class SimulatedDateSource implements DateSource {
