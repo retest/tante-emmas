@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -31,7 +32,7 @@ public class Server extends AbstractVerticle {
 	private final CustomerRepo customers;
 	private final ProductRepo products;
 	private final TemplateEngine engine;
-	private final List<Map<String, Object>> orders = new ArrayList<>();
+	private final List<Map<String, Object>> orders;
 
 	private TimeProvider time;
 	private DateSource date;
@@ -48,6 +49,7 @@ public class Server extends AbstractVerticle {
 		weather = new SimulatedWeatherSource(time, date);
 
 		vertx = Vertx.vertx();
+		orders = new ArrayList<>();
 	}
 
 	@Override
@@ -71,6 +73,13 @@ public class Server extends AbstractVerticle {
 		HttpServer server = vertx.createHttpServer();
 		server.requestHandler(router::accept).listen(8080);
 		System.out.println("Started tante-emma-server.");
+	}
+
+	@Override
+	public void stop() throws Exception {
+		orders.clear(); // This is important to clear state
+
+		System.out.println("Stopped tante-emma-server.");
 	}
 
 	public void speed(RoutingContext context) {
@@ -175,6 +184,12 @@ public class Server extends AbstractVerticle {
 	}
 
 	public void stopServer() {
-		vertx.undeploy(Server.class.getName());
+		vertx.close();
+	}
+
+	public void stopServerAndWait() throws InterruptedException {
+		final CountDownLatch latch = new CountDownLatch(1);
+		vertx.close( e-> latch.countDown() );
+		latch.await();
 	}
 }
