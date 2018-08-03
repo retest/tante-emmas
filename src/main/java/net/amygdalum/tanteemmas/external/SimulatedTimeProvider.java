@@ -1,36 +1,33 @@
 package net.amygdalum.tanteemmas.external;
 
-public class TimeProvider {
+import net.amygdalum.tanteemmas.sources.TimeProvider;
 
-	private long hours;
-	private long speed;
+public class SimulatedTimeProvider implements TimeProvider{
 
-	public TimeProvider() {
+	private final long hours;
+	private final long speed;
+
+	public SimulatedTimeProvider() {
 		this.hours = 0;
 		this.speed = 1;
 	}
 
+	@Override
 	public void setSpeed(long speed) {
-		if (speed <= 0) {
-			speed = 1;
-			return;
-		}
-		this.speed = speed;
+		// do nothing
 	}
 
+	@Override
 	public long getSpeed() {
 		return speed;
 	}
 
+	@Override
 	public long hours() {
-		increase();
 		return hours;
 	}
 
-	private void increase() {
-		hours += speed;
-	}
-
+	@Override
 	public long days() {
 		return hours() / 24;
 	}
