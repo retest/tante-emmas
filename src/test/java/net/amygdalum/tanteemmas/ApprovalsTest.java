@@ -45,8 +45,8 @@ public class ApprovalsTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws InterruptedException {
 		driver.quit();
-		server.stopServer();
+		server.stopServerAndWait();
 	}
 }
