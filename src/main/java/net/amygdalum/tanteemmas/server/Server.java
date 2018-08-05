@@ -175,8 +175,13 @@ public class Server extends AbstractVerticle {
 	}
 
 	public static void main(String[] args) {
+		deployServer(8080);
+	}
+
+	public static Vertx deployServer(final int port) {
 		Vertx vertx = Vertx.vertx();
-		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("http.port", 8080));
+		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("http.port", port));
 		vertx.deployVerticle(Server.class.getName(), options);
+		return vertx;
 	}
 }
