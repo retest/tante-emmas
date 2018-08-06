@@ -11,19 +11,16 @@ import de.retest.recheck.RecheckImpl;
 import io.vertx.core.Vertx;
 import net.amygdalum.tanteemmas.server.Server;
 import net.amygdalum.tanteemmas.testutils.ChromeDriverFactory;
-import net.amygdalum.tanteemmas.testutils.TestHelper;
 
 public class RecheckTest {
 
 	private Vertx vertx;
-	private int port;
 	private WebDriver driver;
 	private Recheck re;
 
 	@Before
 	public void setup() {
-		port = TestHelper.generateRandomPort();
-		vertx = Server.deployServer(port);
+		vertx = Server.deployServer(8080);
 
 		driver = ChromeDriverFactory.createNewInstance();
 
@@ -33,7 +30,7 @@ public class RecheckTest {
 	@Test
 	public void check_order() throws Exception {
 		re.startTest("check_order");
-		driver.get("http://localhost:" + port + "/logout");
+		driver.get("http://localhost:8080/logout");
 		// login
 		driver.findElement(By.name("customer")).sendKeys("Max");
 		driver.findElement(By.name("login")).click();
