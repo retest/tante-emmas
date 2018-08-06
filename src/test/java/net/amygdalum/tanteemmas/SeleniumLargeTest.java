@@ -8,25 +8,28 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.vertx.core.Vertx;
 import net.amygdalum.tanteemmas.server.Server;
 import net.amygdalum.tanteemmas.testutils.ChromeDriverFactory;
+import net.amygdalum.tanteemmas.testutils.TestHelper;
 
 public class SeleniumLargeTest {
 
+	private Vertx vertx;
+	private int port;
 	private WebDriver driver;
-	private Server server;
 
 	@Before
 	public void setup() {
-		server = new Server();
-		server.startServer();
+		port = TestHelper.generateRandomPort();
+		vertx = Server.deployServer(port);
 
 		driver = ChromeDriverFactory.createNewInstance();
 	}
 
 	@Test
 	public void check_order() throws Exception {
-		driver.get("http://localhost:8080/logout");
+		driver.get("http://localhost:" + port + "/logout");
 		// login
 		driver.findElement(By.name("customer")).sendKeys("Max");
 		driver.findElement(By.name("login")).click();
@@ -56,7 +59,7 @@ public class SeleniumLargeTest {
 	@After
 	public void tearDown() throws InterruptedException {
 		driver.quit();
-		server.stopServerAndWait();
+		vertx.close();
 	}
 
 }

@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.impl.StaticHandlerImpl;
@@ -26,8 +27,6 @@ import net.amygdalum.tanteemmas.sources.TimeProvider;
 import net.amygdalum.tanteemmas.sources.WeatherSource;
 
 public class Server extends AbstractVerticle {
-
-	private final Vertx vertx;
 
 	private final CustomerRepo customers;
 	private final ProductRepo products;
@@ -48,7 +47,6 @@ public class Server extends AbstractVerticle {
 		daytime = new SimulatedDaytimeSource(time);
 		weather = new SimulatedWeatherSource(time, date);
 
-		vertx = Vertx.vertx();
 		orders = new ArrayList<>();
 	}
 
@@ -71,8 +69,9 @@ public class Server extends AbstractVerticle {
 		router.route().handler(this::show);
 
 		HttpServer server = vertx.createHttpServer();
-		server.requestHandler(router::accept).listen(8080);
-		System.out.println("Started tante-emma-server.");
+		int port = vertx.getOrCreateContext().config().getInteger("http.port");
+		server.requestHandler(router::accept).listen(port);
+		System.out.println("Started tante-emma-server on port " + port);
 	}
 
 	@Override
@@ -176,20 +175,13 @@ public class Server extends AbstractVerticle {
 	}
 
 	public static void main(String[] args) {
-		new Server().startServer();
+		deployServer(8080);
 	}
 
-	public void startServer() {
-		vertx.deployVerticle(Server.class.getName());
-	}
-
-	public void stopServer() {
-		vertx.close();
-	}
-
-	public void stopServerAndWait() throws InterruptedException {
-		final CountDownLatch latch = new CountDownLatch(1);
-		vertx.close( e-> latch.countDown() );
-		latch.await();
+	public static Vertx deployServer(final int port) {
+		Vertx vertx = Vertx.vertx();
+		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("http.port", port));
+		vertx.deployVerticle(Server.class.getName(), options);
+		return vertx;
 	}
 }
