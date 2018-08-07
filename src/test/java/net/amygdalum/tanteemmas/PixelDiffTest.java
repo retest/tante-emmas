@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +36,7 @@ public class PixelDiffTest {
 		driver = ChromeDriverFactory.createNewInstance();
 	}
 
+	@Ignore
 	@Test
 	public void check_order() throws Exception {
 		driver.get("http://localhost:" + port + "/logout");
