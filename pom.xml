@@ -114,6 +114,13 @@
 			<version>2.6</version>
 		</dependency>
 		<dependency>
+			<!-- java.lang.NoClassDefFoundError: picocli/CommandLine$IVersionProvider -->
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>de.retest</groupId>
 			<artifactId>recheck</artifactId>
 			<version>0.4.1</version>
