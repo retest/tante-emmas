@@ -1,5 +1,4 @@
 /* ==== Google font ==== */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600);
 @import url('font-awesome.css');
 /* ==== overwrite bootstrap standard ==== */
 @import url('overwrite.css');
@@ -14,7 +13,7 @@ body {
 	background-color:#fff;
 }
 
-hi,h2,h3,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6 {
 	color:#333;
 	line-height:1.1em;
 }
