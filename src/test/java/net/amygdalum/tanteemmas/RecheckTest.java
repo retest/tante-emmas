@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import de.retest.Properties;
+import de.retest.elementcollection.RecheckIgnore;
 import de.retest.recheck.Recheck;
 import de.retest.recheck.RecheckImpl;
 import io.vertx.core.Vertx;
@@ -21,6 +23,15 @@ public class RecheckTest {
 	@Before
 	public void setup() {
 		vertx = Server.deployServer(8080);
+
+		// Without that, we are actually doing cross-browser testing...
+		System.setProperty(RecheckIgnore.IGNORED_ATTRIBUTES_PROPERTY, //
+				"outline" + Properties.VALUES_SEPARATOR + //
+				"margin-left" + Properties.VALUES_SEPARATOR + //
+				"margin-right"+ Properties.VALUES_SEPARATOR + //
+				"left"+ Properties.VALUES_SEPARATOR + //
+				"clip"
+				);
 
 		driver = ChromeDriverFactory.createNewInstance();
 
