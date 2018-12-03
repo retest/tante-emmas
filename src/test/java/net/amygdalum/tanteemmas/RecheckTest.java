@@ -10,6 +10,7 @@ import de.retest.Properties;
 import de.retest.elementcollection.RecheckIgnore;
 import de.retest.recheck.Recheck;
 import de.retest.recheck.RecheckImpl;
+import de.retest.ui.descriptors.OutlineAttribute;
 import io.vertx.core.Vertx;
 import net.amygdalum.tanteemmas.server.Server;
 import net.amygdalum.tanteemmas.testutils.ChromeDriverFactory;
@@ -26,7 +27,8 @@ public class RecheckTest {
 
 		// Without that, we are actually doing cross-browser testing...
 		System.setProperty(RecheckIgnore.IGNORED_ATTRIBUTES_PROPERTY, //
-				"outline" + Properties.VALUES_SEPARATOR + //
+				// TODO Remove with retest-model > 0.5.1
+				OutlineAttribute.ABSOLUTE_OUTLINE + Properties.VALUES_SEPARATOR + //
 				"margin-left" + Properties.VALUES_SEPARATOR + //
 				"margin-right"+ Properties.VALUES_SEPARATOR + //
 				"left"+ Properties.VALUES_SEPARATOR + //
