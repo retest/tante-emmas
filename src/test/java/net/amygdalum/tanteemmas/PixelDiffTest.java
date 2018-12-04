@@ -1,6 +1,5 @@
 package net.amygdalum.tanteemmas;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
@@ -14,13 +13,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import de.retest.image.ExactImageDifferenceCalculator;
+import de.retest.web.ScreenshotProvider;
 import io.vertx.core.Vertx;
 import net.amygdalum.tanteemmas.server.Server;
 import net.amygdalum.tanteemmas.testutils.ChromeDriverFactory;
 import net.amygdalum.tanteemmas.testutils.TestHelper;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.shooting.SimpleShootingStrategy;
-import ru.yandex.qatools.ashot.shooting.ViewportPastingDecorator;
 
 public class PixelDiffTest {
 
@@ -60,7 +57,7 @@ public class PixelDiffTest {
 		final String original = "src/test/resources/checks/PixelDiffTest.check_order.jpg";
 
 		// To update the master locally, just use `original` instead of `run`:
-		ImageIO.write(getScreenshot(), "PNG", new File(run));
+		ImageIO.write(ScreenshotProvider.shootFullPage(driver), "PNG", new File(run));
 
 		final ExactImageDifferenceCalculator pixelDiff = new ExactImageDifferenceCalculator();
 		Assert.assertEquals(1.0, pixelDiff.compare(original, run).getMatch(), 0.01);
@@ -70,11 +67,5 @@ public class PixelDiffTest {
 	public void tearDown() {
 		driver.quit();
 		vertx.close();
-	}
-
-	public BufferedImage getScreenshot() {
-		final SimpleShootingStrategy strategy = new SimpleShootingStrategy();
-		final ViewportPastingDecorator decorator = new ViewportPastingDecorator(strategy).withScrollTimeout(100);
-		return new AShot().shootingStrategy(decorator).takeScreenshot(driver).getImage();
 	}
 }
