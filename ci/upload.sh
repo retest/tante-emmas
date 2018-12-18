@@ -16,7 +16,7 @@ echo "Preparing minio mc ..."
 ${MC} --quiet config host add do ${ENDPOINT} ${S3_ACCESS_KEY} ${S3_SECRET}
 
 echo "Uploading to S3 ..."
-${MC} --quiet cp --recursive ${TRAVIS_BUILD_DIR}/${LOCAL_PATH} ${BUCKET}/${TRAVIS_REPO_SLUG}/${TRAVIS_BRANCH}
+${MC} --quiet cp --recursive ${TRAVIS_BUILD_DIR}/${LOCAL_PATH} ${BUCKET}/${TRAVIS_REPO_SLUG}/${TRAVIS_BRANCH}/${TRAVIS_BUILD_NUMBER}
 
 echo "Cleaning up config ..."
 rm -rf ${HOME}/.mc
