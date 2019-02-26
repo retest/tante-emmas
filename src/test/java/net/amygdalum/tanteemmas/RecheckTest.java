@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import de.retest.Properties;
-import de.retest.elementcollection.RecheckIgnore;
 import de.retest.recheck.Recheck;
 import de.retest.recheck.RecheckImpl;
 import io.vertx.core.Vertx;
@@ -22,43 +20,32 @@ public class RecheckTest {
 
 	@Before
 	public void setup() {
-		vertx = Server.deployServer(8080);
-
-		// Without that, we are actually doing cross-browser testing...
-		System.setProperty(RecheckIgnore.IGNORED_ATTRIBUTES_PROPERTY, //
-				"outline" + Properties.VALUES_SEPARATOR + //
-				"margin-left" + Properties.VALUES_SEPARATOR + //
-				"margin-right"+ Properties.VALUES_SEPARATOR + //
-				"left"+ Properties.VALUES_SEPARATOR + //
-				"clip"
-				);
-
+		vertx = Server.deployServer( 8080 );
 		driver = ChromeDriverFactory.createNewInstance();
-
 		re = new RecheckImpl();
 	}
 
 	@Test
 	public void check_order() throws Exception {
-		re.startTest("check_order");
-		driver.get("http://localhost:8080/logout");
+		re.startTest( "check_order" );
+		driver.get( "http://localhost:8080/logout" );
 		// login
-		driver.findElement(By.name("customer")).sendKeys("Max");
-		driver.findElement(By.name("login")).click();
+		driver.findElement( By.name( "customer" ) ).sendKeys( "Max" );
+		driver.findElement( By.name( "login" ) ).click();
 
-		re.check(driver, "initial");
+		re.check( driver, "initial" );
 		// test
-		driver.findElement(By.xpath("//tr[4]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[4]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[2]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[3]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[2]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[7]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[6]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[5]/td[3]/a")).click();
-		driver.findElement(By.xpath("//tr[3]/td[3]/a")).click();
+		driver.findElement( By.xpath( "//tr[4]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[4]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[2]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[3]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[2]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[7]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[6]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[5]/td[3]/a" ) ).click();
+		driver.findElement( By.xpath( "//tr[3]/td[3]/a" ) ).click();
 
-		re.check(driver, "final");
+		re.check( driver, "final" );
 		re.capTest();
 	}
 
